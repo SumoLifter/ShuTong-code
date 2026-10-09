@@ -1,0 +1,25 @@
+# Example provider configuration.
+#
+# Replace this entry with your own OpenAI-compatible service. Any number of
+# providers may be declared under `providers`; `run_pipeline.py` selects one
+# via `--provider` (provider name) and `--model` (model id or alias).
+#
+# The API key is read from the environment variable named by `api_key_env`
+# (optional `api_key_env_fallbacks` may list alternates); keys are never
+# written into this file.
+providers:
+  example:
+    base_url: "https://your-openai-compatible-endpoint/v1"
+    api_key_env: "LLM_API_KEY"
+    models:
+      - id: "your-chat-model"
+        alias: "your-chat-model"
+        max_tokens: 8192
+        support_json_mode: false
+        structured_output_mode: "none"
+        timeout: 180
+    # Optional: embedding entries, used only when querying a vector index.
+    embeddings:
+      - id: "your-embedding-model"
+        alias: "your-embedding-model"
+        dimensions: 1024
