@@ -12,6 +12,12 @@ summary. The SOAP, reasoning, and question tasks perform **read-only** retrieval
 (RAG) against a pre-built Chroma index; the runtime never rebuilds or writes to
 the index.
 
+The package also includes the DPO preference-training code (`dpo/`): preference
+pairs are constructed from question revision events (the pre- and post-repair
+versions produced by the question task's selective self-reflection loop), and
+training is performed with TRL's `DPOTrainer` (LoRA by default; QLoRA and full
+fine-tuning are supported). No training data or model weights are distributed.
+
 ## Installation
 
 ```bash
@@ -23,6 +29,16 @@ python -m venv .venv
 
 This installs all dependencies including the Maze workflow framework
 (`maze-agent>=1.0.2`, source: <https://github.com/maze-agent/Maze>).
+
+For DPO training, install `dpo/requirements_gpu.txt` in a separate CUDA
+environment, then run:
+
+```bash
+python dpo_main.py --dataset <dpo_pairs.jsonl> --model-name <base-model> --output-dir output/dpo_model
+```
+
+`--dataset` and `--model-name` are required; the base model (Hugging Face repo
+id or local path) is supplied by the user.
 
 ## Configuration
 
